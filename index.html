@@ -1,0 +1,1769 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prime Achadinhos — Shopee & Mercado Livre</title>
+  <meta name="description" content="Os melhores achadinhos do Brasil. Curadoria diária de ofertas da Shopee e Mercado Livre com os menores preços." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    /* ──────────────────────────────────────────
+       TOKENS
+    ────────────────────────────────────────── */
+    :root {
+      --orange:     #FF6B35;
+      --pink:       #FF3A6E;
+      --yellow:     #FFB800;
+      --green:      #00B36B;
+      --dark:       #0F0F0F;
+      --card:       #1A1A1A;
+      --card2:      #232323;
+      --border:     #2A2A2A;
+      --text:       #FFFFFF;
+      --muted:      rgba(255,255,255,0.45);
+      --peach-bg:   #FFF4F0;
+      --gradient:   linear-gradient(135deg, var(--orange), var(--pink));
+      --r-sm: 10px;
+      --r-md: 14px;
+      --r-lg: 20px;
+      --r-xl: 99px;
+      --font: 'Poppins', sans-serif;
+    }
+
+    /* ──────────────────────────────────────────
+       RESET
+    ────────────────────────────────────────── */
+
+    #fogo {
+      width: 14px;
+      height: 14px;
+    }
+
+    #lojas{
+      width: 15px;
+      height: 15px;
+    }
+    /* TOP 3 */
+    .top3-icon{
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+    }
+
+    /* 4º e 5º */
+    .top5-icon{
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+      opacity: .85;
+    }
+
+    #logo_tipo {
+      width: 13%;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--dark);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+    button { cursor: pointer; font-family: var(--font); border: none; outline: none; }
+
+    /* ──────────────────────────────────────────
+       SCROLLBAR
+    ────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--card); }
+    ::-webkit-scrollbar-thumb { background: var(--orange); border-radius: 99px; }
+
+    /* ──────────────────────────────────────────
+      ANNOUNCEMENT BAR
+    ────────────────────────────────────────── */
+    .announce {
+      background: var(--gradient);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 8px 0;
+      letter-spacing: 0.3px;
+      overflow: hidden;
+      position: relative;
+      white-space: nowrap;
+    }
+
+    .announce-content {
+      display: inline-block;
+      animation: smoothMarquee 90s linear infinite; /* Alterado de 30s para 50s (mais lento) */
+      white-space: nowrap;
+    }
+
+    .announce-content span {
+      opacity: 0.85;
+      margin: 0 12px;
+      display: inline-flex;
+      align-items: center;
+      vertical-align: middle;
+    }
+
+    .announce-content img {
+      width: 12px;
+      height: 12px;
+      display: inline-block;
+      vertical-align: middle;
+      margin: 0 4px;
+    }
+
+    /* Animação com velocidade constante e tranquila */
+    @keyframes smoothMarquee {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    /* Pausa suave no hover */
+    .announce:hover .announce-content {
+      animation-play-state: paused;
+    }
+
+    /* ──────────────────────────────────────────
+       HEADER / NAV
+    ────────────────────────────────────────── */
+    header {
+      background: var(--dark);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 20px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .logo-icon {
+      width: 38px; height: 38px;
+      border-radius: 10px;
+      background: var(--gradient);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+    .logo-name {
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+    }
+    .logo-name span { color: var(--orange); }
+
+    /* SEARCH */
+    .search-wrap {
+      flex: 1;
+      max-width: 520px;
+      min-width: 0;
+      position: relative;
+    }
+    .search-wrap input {
+      width: 100%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-xl);
+      padding: 10px 48px 10px 18px;
+      font-family: var(--font);
+      font-size: 13px;
+      color: var(--text);
+      transition: border-color .2s;
+    }
+    .search-wrap input::placeholder { color: var(--muted); }
+    .search-wrap input:focus { border-color: var(--orange); outline: none; }
+    .search-wrap button {
+      position: absolute;
+      right: 6px; top: 50%;
+      transform: translateY(-50%);
+      background: var(--gradient);
+      border-radius: var(--r-xl);
+      padding: 6px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      color: white;
+    }
+
+    /* STORE PILLS */
+    .store-pills { display: flex; gap: 6px; flex-shrink: 0; }
+    .store-pill {
+      display: flex; align-items: center; gap: 6px;
+      padding: 6px 12px;
+      border-radius: var(--r-xl);
+      font-size: 11px; font-weight: 600;
+      border: 1.5px solid transparent;
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .pill-shopee { border-color: var(--orange); color: var(--orange); }
+    .pill-shopee.active, .pill-shopee:hover { background: var(--orange); color: white; }
+    .pill-ml { border-color: var(--green); color: var(--green); }
+    .pill-ml.active, .pill-ml:hover { background: var(--green); color: white; }
+    .pill-all { border-color: var(--border); color: var(--orange); }
+    /* Estado normal */
+    .pill-all {
+      background: transparent;
+      border: 1.5px solid var(--border);
+      color: #fc485c; /* Texto rosa */
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    /* Estado ativo e hover - fundo rosa e texto branco */
+    .pill-all.active,
+    .pill-all:hover {
+      border-color: #fc485c;
+      background: #fc485c; /* Fundo rosa */
+      color: white; /* Texto branco */
+      transform: translateY(-1px); /* Efeito sutil */
+      box-shadow: 0 4px 12px rgba(252, 72, 92, 0.3); /* Sombra rosa suave */
+    }
+
+    /* Efeito de clique */
+    .pill-all:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 6px rgba(252, 72, 92, 0.2);
+    }
+
+    /* ──────────────────────────────────────────
+       HERO
+    ────────────────────────────────────────── */
+    /* Animações para os elementos decorativos */
+@keyframes float {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(5deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.25;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.25;
+  }
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(200%) rotate(45deg);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hero Container */
+.hero {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 32px 20px 0;
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 16px;
+  align-items: stretch;
+}
+
+/* Hero Main com animação de entrada */
+.hero-main {
+  background: var(--card);
+  border-radius: var(--r-lg);
+  border: 1px solid var(--border);
+  padding: 36px 40px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 260px;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.hero-main::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,107,53,.18) 0%, rgba(255,58,110,.12) 50%, transparent 100%);
+  pointer-events: none;
+  animation: pulse 8s ease-in-out infinite;
+}
+
+/* Orb flutuante */
+.hero-orb {
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle, rgba(255,107,53,0.25) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Hero Badge com brilho */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,107,53,0.15);
+  border: 1px solid rgba(255,107,53,0.3);
+  border-radius: var(--r-xl);
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--orange);
+  margin-bottom: 12px;
+  width: fit-content;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.hero-badge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,107,53,0.2), transparent);
+  transition: left 0.5s ease;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-badge:hover::before {
+  left: 100%;
+}
+
+/* Hero Title com gradiente animado */
+.hero-title {
+  font-size: clamp(26px, 3.5vw, 42px);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  margin-bottom: 10px;
+  animation: slideInLeft 0.6s ease-out 0.2s backwards;
+}
+
+.hero-title .grad {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% auto;
+  animation: gradientShift 3s linear infinite;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Hero Subtitle */
+.hero-sub {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 24px;
+  max-width: 480px;
+  animation: slideInLeft 0.6s ease-out 0.3s backwards;
+}
+
+/* Hero CTA com hover e pulso */
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gradient);
+      color: white;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 12px 28px;
+      border-radius: var(--r-xl);
+      width: fit-content;
+      transition: transform .15s, box-shadow .15s;
+      animation: fadeInUp 0.6s ease-out 0.4s backwards;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-cta::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    .hero-cta:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .hero-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255,107,53,.35);
+      animation: pulse 1s ease-in-out infinite;
+    }
+
+    /* Hero Side com animação de entrada */
+    .hero-side {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      animation: slideInRight 0.6s ease-out;
+    }
+
+    /* Hero Stat cards com animação individual */
+    .hero-stat {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      padding: 18px 20px;
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      animation: fadeInUp 0.6s ease-out backwards;
+    }
+
+    .hero-stat:nth-child(1) {
+      animation-delay: 0.1s;
+    }
+
+    .hero-stat:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .hero-stat:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+
+    /* Hover effect para os cards */
+    .hero-stat:hover {
+      transform: translateX(5px) translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Barra lateral animada */
+    .hero-stat::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      border-radius: 99px;
+      transition: width 0.3s ease;
+    }
+
+    .hero-stat:hover::before {
+      width: 6px;
+    }
+
+    .hero-stat.s-orange::before { background: var(--orange); }
+    .hero-stat.s-pink::before { background: var(--pink); }
+    .hero-stat.s-green::before { background: var(--green); }
+
+    /* Efeito de brilho ao passar o mouse */
+    .hero-stat::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      transition: left 0.5s ease;
+      pointer-events: none;
+    }
+
+    .hero-stat:hover::after {
+      left: 100%;
+    }
+
+    .hero-stat .stat-num {
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1;
+      transition: transform 0.3s ease;
+      display: inline-block;
+    }
+
+    .hero-stat:hover .stat-num {
+      transform: scale(1.05);
+    }
+
+    .hero-stat .stat-label {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 4px;
+      transition: color 0.3s ease;
+    }
+
+    .hero-stat:hover .stat-label {
+      color: var(--text);
+    }
+
+    /* ──────────────────────────────────────────
+       CATEGORY SCROLL
+    ────────────────────────────────────────── */
+    .section {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 32px 20px 0;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-size: 18px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-title .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--orange);
+      flex-shrink: 0;
+    }
+    .see-all {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--orange);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .see-all:hover { text-decoration: underline; }
+
+    /* Container das categorias com barra de rolagem personalizada */
+    .cats-scroll {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+    }
+
+    /* WebKit (Chrome, Safari, Edge) */
+    .cats-scroll::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    /* Trilho da barra de rolagem - fundo acizentado */
+    .cats-scroll::-webkit-scrollbar-track {
+      background: #e0e0e0;
+      border-radius: 10px;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+    }
+
+    /* Polegar (barra que você arrasta) - estado normal (laranja) */
+    .cats-scroll::-webkit-scrollbar-thumb {
+      background: linear-gradient(90deg, #ff6b35, #ff4265);
+      border-radius: 10px;
+      transition: all 0.2s ease;
+    }
+
+    /* Polegar ao passar o mouse - fica rosa */
+    .cats-scroll::-webkit-scrollbar-thumb:hover {
+      background: #ff4265;
+      transform: scaleY(1.1);
+    }
+
+    /* Polegar enquanto clica/arrasta - fica rosa escuro */
+    .cats-scroll::-webkit-scrollbar-thumb:active {
+      background: #e63a5a;
+      transform: scaleY(1.1);
+      cursor: grabbing;
+    }
+
+    /* Firefox */
+    .cats-scroll {
+      scrollbar-width: thin;
+      scrollbar-color: #ff6b35 #e0e0e0;
+    }
+
+    /* Firefox - hover */
+    .cats-scroll:hover {
+      scrollbar-color: #ff4265 #e0e0e0;
+    }
+
+    .cat-btn {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-width: 85px;
+      padding: 12px 10px;
+      border: 2px solid #e5e5e5;
+      border-radius: 16px;
+      background: transparent;
+      cursor: pointer;
+      transition: all .2s ease;
+    }
+
+    /* imagem - estado normal (laranja) */
+    .cat-icon {
+      width: 30px;
+      height: 30px;
+      object-fit: contain;
+      filter: brightness(0) saturate(100%) invert(48%) sepia(79%) saturate(2528%) hue-rotate(350deg) brightness(98%) contrast(96%);
+      transition: filter .2s ease;
+    }
+
+    /* texto - estado normal (cinza) */
+    .cat-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      white-space: nowrap;
+      text-align: center;
+      transition: color .2s ease;
+    }
+
+    /* hover e ativo - borda fica rosa */
+    .cat-btn:hover,
+    .cat-btn.active {
+      border-color: #ff4265;
+      background: transparent;
+    }
+
+    /* hover e ativo - imagem fica rosa */
+    .cat-btn:hover .cat-icon,
+    .cat-btn.active .cat-icon {
+      filter: brightness(0) saturate(100%) invert(39%) sepia(98%) saturate(2520%) hue-rotate(328deg) brightness(99%) contrast(101%);
+    }
+
+    /* hover e ativo - texto fica rosa */
+    .cat-btn:hover .cat-label,
+    .cat-btn.active .cat-label {
+      color: #ff4265;
+    }
+
+    /* ──────────────────────────────────────────
+       FILTER BAR
+    ────────────────────────────────────────── */
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .filter-label { font-size: 12px; color: var(--muted); font-weight: 500; }
+    .filter-chip {
+      padding: 6px 14px;
+      border-radius: var(--r-xl);
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .filter-chip:hover { border-color: var(--orange); color: var(--orange); }
+    .filter-chip.active {
+      background: var(--orange);
+      border-color: var(--orange);
+      color: white;
+    }
+    .filter-sep { width: 1px; height: 20px; background: var(--border); }
+    .sort-select {
+      margin-left: auto;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-xl);
+      padding: 6px 12px;
+      font-size: 12px;
+      font-family: var(--font);
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .sort-select option { background: var(--card); color: var(--text); }
+
+    /* ──────────────────────────────────────────
+       PRODUCT GRID
+    ────────────────────────────────────────── */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+    }
+
+    .product-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      overflow: hidden;
+      transition: transform .2s, border-color .2s, box-shadow .2s;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .product-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255,107,53,.4);
+      box-shadow: 0 12px 32px rgba(0,0,0,.4);
+    }
+
+    /* Store badge */
+    .store-badge {
+      position: absolute;
+      top: 10px; left: 10px;
+      z-index: 2;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: var(--r-xl);
+      letter-spacing: 0.5px;
+    }
+    .badge-shopee { background: var(--orange); color: white; }
+    .badge-ml { background: var(--green); color: white; }
+
+    /* Discount badge */
+    .discount-badge {
+      position: absolute;
+      top: 10px; right: 10px;
+      z-index: 2;
+      background: var(--pink);
+      color: white;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: var(--r-xl);
+    }
+
+    /* Image */
+    .product-img-wrap {
+      aspect-ratio: 1;
+      background: var(--card2);
+      overflow: hidden;
+      position: relative;
+    }
+    .product-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .3s;
+    }
+    .product-card:hover .product-img-wrap img { transform: scale(1.05); }
+
+    /* Placeholder when no image */
+    .product-img-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      background: var(--card2);
+    }
+
+    /* Info */
+    .product-info {
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      gap: 6px;
+    }
+    .product-cat-tag {
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--orange);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .product-name {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .product-desc {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-top: auto;
+    }
+    .price-old {
+      font-size: 11px;
+      color: var(--muted);
+      text-decoration: line-through;
+    }
+    .price-new {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--orange);
+      line-height: 1;
+    }
+    .price-new small {
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .free-ship {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--green);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .btn-buy {
+      margin-top: 8px;
+      display: block;
+      width: 100%;
+      background: var(--gradient);
+      color: white;
+      font-weight: 700;
+      font-size: 12px;
+      padding: 10px;
+      border-radius: var(--r-sm);
+      text-align: center;
+      transition: opacity .15s, transform .15s;
+    }
+    .btn-buy:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    /* ──────────────────────────────────────────
+       URGENCY BANNER
+    ────────────────────────────────────────── */
+    .urgency-banner {
+      max-width: 1280px;
+      margin: 32px auto 0;
+      padding: 0 20px;
+    }
+    .urgency-inner {
+      background: var(--gradient);
+      border-radius: var(--r-md);
+      padding: 18px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .urgency-text {
+      font-size: 15px;
+      font-weight: 800;
+    }
+    .urgency-text small {
+      display: block;
+      font-size: 12px;
+      font-weight: 400;
+      opacity: 0.85;
+      margin-top: 2px;
+    }
+    .urgency-cta {
+      background: white;
+      color: var(--orange);
+      font-weight: 800;
+      font-size: 13px;
+      padding: 10px 22px;
+      border-radius: var(--r-xl);
+      white-space: nowrap;
+    }
+
+    /* ──────────────────────────────────────────
+       TOP 5
+    ────────────────────────────────────────── */
+    .top5-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .top5-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      transition: border-color .15s;
+    }
+    .top5-item:hover { border-color: rgba(255,107,53,.4); }
+    .top5-num {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--orange);
+      width: 32px;
+      flex-shrink: 0;
+      text-align: center;
+    }
+    .top5-num.gold { color: #FFB800; }
+    .top5-num.silver { color: #C0C0C0; }
+    .top5-num.bronze { color: #CD7F32; }
+    .top5-name { font-size: 13px; font-weight: 500; flex: 1; color: var(--text); line-height: 1.3; }
+    .top5-price { font-size: 14px; font-weight: 800; color: var(--orange); flex-shrink: 0; }
+    .top5-arrow { color: var(--muted); font-size: 12px; flex-shrink: 0; }
+
+    /* ──────────────────────────────────────────
+       TRUST ROW
+    ────────────────────────────────────────── */
+    .trust-row {
+      max-width: 1280px;
+      margin: 32px auto 0;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .trust-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .trust-icon {
+      width:30px;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+    .trust-text strong { font-size: 13px; font-weight: 700; display: block; }
+    .trust-text span { font-size: 11px; color: var(--muted); }
+
+    /* ──────────────────────────────────────────
+       FOOTER
+    ────────────────────────────────────────── */
+    footer {
+      margin-top: 48px;
+      background: var(--card);
+      border-top: 1px solid var(--border);
+      padding: 32px 20px;
+    }
+    .footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 32px;
+    }
+    .footer-logo-name {
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+    .footer-logo-name span { color: var(--orange); }
+    .footer-desc { font-size: 12px; color: var(--muted); line-height: 1.6; margin-bottom: 16px; }
+    .social-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .social-btn {
+      width: 34px;
+      height: 34px;
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    /* Imagem das redes sociais - estado normal */
+    .social-btn img {
+      width: 18px;
+      height: 18px;
+      object-fit: contain;
+      transition: all 0.2s ease;
+    }
+
+    /* Hover - borda rosa, fundo rosa suave e imagem rosa */
+    .social-btn:hover {
+      border-color: #ff4265;
+      background: rgba(255, 66, 101, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .social-btn:hover img {
+      filter: brightness(0) saturate(100%) invert(39%) sepia(98%) saturate(2520%) hue-rotate(328deg) brightness(99%) contrast(101%);
+    }
+
+    /* Active - efeito de clique */
+    .social-btn:active {
+      transform: translateY(0px) scale(0.95);
+      background: rgba(255, 66, 101, 0.2);
+    }
+
+    .social-btn:active img {
+      filter: brightness(0) saturate(100%) invert(27%) sepia(98%) saturate(2520%) hue-rotate(328deg) brightness(95%) contrast(105%);
+    }
+    .footer-heading { font-size: 13px; font-weight: 700; margin-bottom: 12px; color: var(--text); }
+    .footer-links { display: flex; flex-direction: column; gap: 6px; }
+    .footer-links a { font-size: 12px; color: var(--muted); transition: color .15s; }
+    .footer-links a:hover { color: var(--orange); }
+    .footer-bottom {
+      max-width: 1280px;
+      margin: 24px auto 0;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .footer-bottom p { font-size: 11px; color: var(--muted); }
+
+    /* ──────────────────────────────────────────
+       NO RESULTS
+    ────────────────────────────────────────── */
+    .no-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+    }
+    .no-results .nr-icon { font-size: 48px; margin-bottom: 12px; }
+    .no-results p { font-size: 14px; }
+
+    /* ──────────────────────────────────────────
+       LOAD MORE
+    ────────────────────────────────────────── */
+    .load-more-wrap { text-align: center; margin-top: 32px; }
+    .btn-load-more {
+      background: var(--card);
+      border: 1.5px solid var(--orange);
+      color: var(--orange);
+      font-weight: 700;
+      font-size: 13px;
+      padding: 12px 32px;
+      border-radius: var(--r-xl);
+      transition: all .15s;
+    }
+    .btn-load-more:hover { background: var(--orange); color: white; }
+
+    /* ──────────────────────────────────────────
+       MOBILE
+    ────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-side { flex-direction: row; }
+      .footer-inner { grid-template-columns: 1fr 1fr; }
+      .store-pills .pill-all { display: none; }
+    }
+    @media (max-width: 600px) {
+      #logo_tipo {
+        width: 23%;
+        justify-content: center;
+      }
+      .nav-inner { gap: 10px; flex-wrap: wrap; height: auto; padding: 10px 16px; justify-content: center; }
+      .logo-name { font-size: 15px; }
+      .store-pills { display: none; }
+      .search-wrap { flex: 1 1 100%; max-width: 100%; order: 3; }
+      .hero-main { padding: 24px 20px; min-height: 200px; }
+      .hero-side { display: none; }
+      .footer-inner { grid-template-columns: 1fr; }
+      .footer-inner > *:not(:first-child) { display: none; }
+      .urgency-inner { flex-direction: column; text-align: center; }
+      .products-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    }
+
+    /* ──────────────────────────────────────────
+       ANIMATIONS
+    ────────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .product-card { animation: fadeUp .3s ease both; }
+
+    /* pulse on urgency */
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255,107,53,.4); }
+      50%       { box-shadow: 0 0 0 8px rgba(255,107,53,0); }
+    }
+    .urgency-inner { animation: pulse 3s infinite; }
+  </style>
+</head>
+<body>
+
+  <div class="announce">
+    <div class="announce-content">
+      🔥 Novos achadinhos todo dia <span>•</span> Shopee & Mercado Livre <span>•</span> Frete grátis em selecionados <img id="check" src="Images/efeitos/check.png" alt=""> <img id="fogo_anuncio" src="Images/efeitos/fogo.png" alt="">
+      <!-- DUPLICADO para efeito contínuo -->
+      🔥 Novos achadinhos todo dia <span>•</span> Shopee & Mercado Livre <span>•</span> Frete grátis em selecionados <img id="check" src="Images/efeitos/check.png" alt=""> <img id="fogo_anuncio" src="Images/efeitos/fogo.png" alt="">
+      <!-- DUPLICADO para efeito contínuo -->
+      🔥 Novos achadinhos todo dia <span>•</span> Shopee & Mercado Livre <span>•</span> Frete grátis em selecionados <img id="check" src="Images/efeitos/check.png" alt=""> <img id="fogo_anuncio" src="Images/efeitos/fogo.png" alt="">
+      <!-- DUPLICADO para efeito contínuo -->
+      🔥 Novos achadinhos todo dia <span>•</span> Shopee & Mercado Livre <span>•</span> Frete grátis em selecionados <img id="check" src="Images/efeitos/check.png" alt=""> <img id="fogo_anuncio" src="Images/efeitos/fogo.png" alt="">
+      <!-- DUPLICADO para efeito contínuo -->
+      🔥 Novos achadinhos todo dia <span>•</span> Shopee & Mercado Livre <span>•</span> Frete grátis em selecionados <img id="check" src="Images/efeitos/check.png" alt=""> <img id="fogo_anuncio" src="Images/efeitos/fogo.png" alt="">
+      <!-- DUPLICADO para efeito contínuo -->
+      🔥 Novos achadinhos todo dia <span>•</span> Shopee & Mercado Livre <span>•</span> Frete grátis em selecionados <img id="check" src="Images/efeitos/check.png" alt=""> <img id="fogo_anuncio" src="Images/efeitos/fogo.png" alt="">
+      <!-- DUPLICADO para efeito contínuo -->
+      🔥 Novos achadinhos todo dia <span>•</span> Shopee & Mercado Livre <span>•</span> Frete grátis em selecionados <img id="check" src="Images/efeitos/check.png" alt=""> <img id="fogo_anuncio" src="Images/efeitos/fogo.png" alt="">
+      <!-- DUPLICADO para efeito contínuo -->
+      🔥 Novos achadinhos todo dia <span>•</span> Shopee & Mercado Livre <span>•</span> Frete grátis em selecionados <img id="check" src="Images/efeitos/check.png" alt=""> <img id="fogo_anuncio" src="Images/efeitos/fogo.png" alt="">
+      <!-- DUPLICADO para efeito contínuo -->
+      🔥 Novos achadinhos todo dia <span>•</span> Shopee & Mercado Livre <span>•</span> Frete grátis em selecionados <img id="check" src="Images/efeitos/check.png" alt=""> <img id="fogo_anuncio" src="Images/efeitos/fogo.png" alt="">
+      <!-- DUPLICADO para efeito contínuo -->
+      🔥 Novos achadinhos todo dia <span>•</span> Shopee & Mercado Livre <span>•</span> Frete grátis em selecionados <img id="check" src="Images/efeitos/check.png" alt=""> <img id="fogo_anuncio" src="Images/efeitos/fogo.png" alt="">
+      <!-- DUPLICADO para efeito contínuo -->
+      🔥 Novos achadinhos todo dia <span>•</span> Shopee & Mercado Livre <span>•</span> Frete grátis em selecionados <img id="check" src="Images/efeitos/check.png" alt=""> <img id="fogo_anuncio" src="Images/efeitos/fogo.png" alt="">
+      <!-- DUPLICADO para efeito contínuo -->
+      🔥 Novos achadinhos todo dia <span>•</span> Shopee & Mercado Livre <span>•</span> Frete grátis em selecionados <img id="check" src="Images/efeitos/check.png" alt=""> <img id="fogo_anuncio" src="Images/efeitos/fogo.png" alt="">
+      <!-- DUPLICADO para efeito contínuo -->
+      🔥 Novos achadinhos todo dia <span>•</span> Shopee & Mercado Livre <span>•</span> Frete grátis em selecionados <img id="check" src="Images/efeitos/check.png" alt=""> <img id="fogo_anuncio" src="Images/efeitos/fogo.png" alt="">
+      <!-- DUPLICADO para efeito contínuo -->
+      🔥 Novos achadinhos todo dia <span>•</span> Shopee & Mercado Livre <span>•</span> Frete grátis em selecionados <img id="check" src="Images/efeitos/check.png" alt=""> <img id="fogo_anuncio" src="Images/efeitos/fogo.png" alt="">
+      <!-- DUPLICADO para efeito contínuo -->
+      🔥 Novos achadinhos todo dia <span>•</span> Shopee & Mercado Livre <span>•</span> Frete grátis em selecionados <img id="check" src="Images/efeitos/check.png" alt=""> <img id="fogo_anuncio" src="Images/efeitos/fogo.png" alt="">
+      <!-- DUPLICADO para efeito contínuo -->
+      🔥 Novos achadinhos todo dia <span>•</span> Shopee & Mercado Livre <span>•</span> Frete grátis em selecionados <img id="check" src="Images/efeitos/check.png" alt=""> <img id="fogo_anuncio" src="Images/efeitos/fogo.png" alt="">
+      <!-- DUPLICADO para efeito contínuo -->
+      🔥 Novos achadinhos todo dia <span>•</span> Shopee & Mercado Livre <span>•</span> Frete grátis em selecionados <img id="check" src="Images/efeitos/check.png" alt=""> <img id="fogo_anuncio" src="Images/efeitos/fogo.png" alt="">
+      <!-- DUPLICADO para efeito contínuo -->
+      🔥 Novos achadinhos todo dia <span>•</span> Shopee & Mercado Livre <span>•</span> Frete grátis em selecionados <img id="check" src="Images/efeitos/check.png" alt=""> <img id="fogo_anuncio" src="Images/efeitos/fogo.png" alt="">
+      <!-- DUPLICADO para efeito contínuo -->
+      🔥 Novos achadinhos todo dia <span>•</span> Shopee & Mercado Livre <span>•</span> Frete grátis em selecionados <img id="check" src="Images/efeitos/check.png" alt=""> <img id="fogo_anuncio" src="Images/efeitos/fogo.png" alt="">
+      <!-- DUPLICADO para efeito contínuo -->
+      🔥 Novos achadinhos todo dia <span>•</span> Shopee & Mercado Livre <span>•</span> Frete grátis em selecionados <img id="check" src="Images/efeitos/check.png" alt=""> <img id="fogo_anuncio" src="Images/efeitos/fogo.png" alt="">
+      <!-- DUPLICADO para efeito contínuo -->
+      🔥 Novos achadinhos todo dia <span>•</span> Shopee & Mercado Livre <span>•</span> Frete grátis em selecionados <img id="check" src="Images/efeitos/check.png" alt=""> <img id="fogo_anuncio" src="Images/efeitos/fogo.png" alt="">
+      <!-- DUPLICADO para efeito contínuo -->
+      🔥 Novos achadinhos todo dia <span>•</span> Shopee & Mercado Livre <span>•</span> Frete grátis em selecionados <img id="check" src="Images/efeitos/check.png" alt=""> <img id="fogo_anuncio" src="Images/efeitos/fogo.png" alt="">
+      <!-- DUPLICADO para efeito contínuo -->
+      🔥 Novos achadinhos todo dia <span>•</span> Shopee & Mercado Livre <span>•</span> Frete grátis em selecionados <img id="check" src="Images/efeitos/check.png" alt=""> <img id="fogo_anuncio" src="Images/efeitos/fogo.png" alt="">
+      <!-- DUPLICADO para efeito contínuo -->
+      🔥 Novos achadinhos todo dia <span>•</span> Shopee & Mercado Livre <span>•</span> Frete grátis em selecionados <img id="check" src="Images/efeitos/check.png" alt=""> <img id="fogo_anuncio" src="Images/efeitos/fogo.png" alt="">
+      <!-- DUPLICADO para efeito contínuo -->
+      🔥 Novos achadinhos todo dia <span>•</span> Shopee & Mercado Livre <span>•</span> Frete grátis em selecionados <img id="check" src="Images/efeitos/check.png" alt=""> <img id="fogo_anuncio" src="Images/efeitos/fogo.png" alt="">
+      <!-- DUPLICADO para efeito contínuo -->
+      🔥 Novos achadinhos todo dia <span>•</span> Shopee & Mercado Livre <span>•</span> Frete grátis em selecionados <img id="check" src="Images/efeitos/check.png" alt=""> <img id="fogo_anuncio" src="Images/efeitos/fogo.png" alt="">
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="nav-inner">
+      <a id="logo_tipo" href="" class="logo">
+        <img src="Images/logo.png" alt="">
+      </a>
+
+      <div class="search-wrap">
+        <input type="search" id="main-search" placeholder="Buscar produtos, categorias..." autocomplete="off" />
+        <button onclick="doSearch()">ACHAR</button>
+      </div>
+
+      <div class="store-pills">
+        <button class="store-pill pill-all active" onclick="filterStore('all', this)">Todos</button>
+        <button class="store-pill pill-shopee" onclick="filterStore('shopee', this)"><span><img id="lojas" src="Images/lojas/shopee.png" alt=""></span> Shopee</button>
+        <button class="store-pill pill-ml" onclick="filterStore('ml', this)"><span><img id="lojas" src="Images/lojas/mercado livre.png" alt=""></span> Mercado Livre</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-main">
+      <div class="hero-orb"></div>
+      <div class="hero-badge"><span><img id="fogo" src="Images/efeitos/fogo.png" alt=""></span> CURADORIA DIÁRIA</div>
+      <h1 class="hero-title">Os melhores<br>achados do Brasil<br><span class="grad">estão aqui.</span></h1>
+      <p class="hero-sub">Shopee & Mercado Livre — só produto com avaliação boa e preço que vale a pena.</p>
+      <a href="#produtos" class="hero-cta">Ver todos os achados →</a>
+    </div>
+    <div class="hero-side">
+      <div class="hero-stat s-orange">
+        <div class="stat-num" style="color:var(--orange)">250+</div>
+        <div class="stat-label">Produtos selecionados</div>
+      </div>
+      <div class="hero-stat s-pink">
+        <div class="stat-num" style="color:var(--pink)">2 lojas</div>
+        <div class="stat-label">Shopee & Mercado Livre</div>
+      </div>
+      <div class="hero-stat s-green">
+        <div class="stat-num" style="color:var(--green)">Todo dia</div>
+        <div class="stat-label">Novos achadinhos</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- URGENCY BANNER -->
+  <div class="urgency-banner">
+    <div class="urgency-inner">
+      <div class="urgency-text">
+        ⚡ Queima do Dia — Ofertas com prazo limitado!
+        <small>Preços podem subir a qualquer momento. Não perca.</small>
+      </div>
+      <button class="urgency-cta" onclick="filterCategory('queima', null)">Ver ofertas →</button>
+    </div>
+  </div>
+
+  <!-- CATEGORIES -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-title"><span class="dot"></span> Explorar por categoria</div>
+    </div>
+    <div class="cats-scroll" id="cat-scroll">
+      <button class="cat-btn active" data-cat="all" onclick="filterCategory('all', this)">
+        <img src="Images/categorias/todos.png" class="cat-icon" alt="Todos"><span class="cat-label">Todos</span>
+      </button>
+      <button class="cat-btn" data-cat="tech" onclick="filterCategory('tech', this)">
+        <img src="Images/categorias/tech.png" class="cat-icon" alt="Todos"><span class="cat-label">Tech</span>
+      </button>
+      <button class="cat-btn" data-cat="casa" onclick="filterCategory('casa', this)">
+        <img src="Images/categorias/casa.png" class="cat-icon" alt="Todos"><span class="cat-label">Casa</span>
+      </button>
+      <button class="cat-btn" data-cat="cozinha" onclick="filterCategory('cozinha', this)">
+        <img src="Images/categorias/cozinha.png" class="cat-icon" alt="Todos"><span class="cat-label">Cozinha</span>
+      </button>
+      <button class="cat-btn" data-cat="beleza" onclick="filterCategory('beleza', this)">
+        <img src="Images/categorias/beleza.png" class="cat-icon" alt="Todos"><span class="cat-label">Beleza</span>
+      </button>
+      <button class="cat-btn" data-cat="moda" onclick="filterCategory('moda', this)">
+        <img src="Images/categorias/moda.png" class="cat-icon" alt="Todos"><span class="cat-label">Moda</span>
+      </button>
+      <button class="cat-btn" data-cat="fitness" onclick="filterCategory('fitness', this)">
+        <img src="Images/categorias/fitness.png" class="cat-icon" alt="Todos"><span class="cat-label">Fitness</span>
+      </button>
+      <button class="cat-btn" data-cat="games" onclick="filterCategory('games', this)">
+        <img src="Images/categorias/games.png" class="cat-icon" alt="Todos"><span class="cat-label">Games</span>
+      </button>
+      <button class="cat-btn" data-cat="automotivo" onclick="filterCategory('automotivo', this)">
+        <img src="Images/categorias/automotivo.png" class="cat-icon" alt="Todos"><span class="cat-label">Automotivo</span>
+      </button>
+      <button class="cat-btn" data-cat="papelaria" onclick="filterCategory('papelaria', this)">
+        <img src="Images/categorias/papelaria.png" class="cat-icon" alt="Todos"><span class="cat-label">Papelaria</span>
+      </button>
+      <button class="cat-btn" data-cat="decoracao" onclick="filterCategory('decoracao', this)">
+        <img src="Images/categorias/decoração.png" class="cat-icon" alt="Todos"><span class="cat-label">Decoração</span>
+      </button>
+      <button class="cat-btn" data-cat="utilidades" onclick="filterCategory('utilidades', this)">
+        <img src="Images/categorias/utilidades.png" class="cat-icon" alt="Todos"><span class="cat-label">Utilidades</span>
+      </button>
+      <button class="cat-btn" data-cat="infantil" onclick="filterCategory('infantil', this)">
+        <img src="Images/categorias/infantil.png" class="cat-icon" alt="Todos"><span class="cat-label">Infantil</span>
+      </button>
+      <button class="cat-btn" data-cat="pet" onclick="filterCategory('pet', this)">
+        <img src="Images/categorias/pets.png" class="cat-icon" alt="Todos"><span class="cat-label">Pet Shop</span>
+      </button>
+      <button class="cat-btn" data-cat="ferramentas" onclick="filterCategory('ferramentas', this)">
+        <img src="Images/categorias/ferramentas.png" class="cat-icon" alt="Todos"><span class="cat-label">Ferramentas</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section class="section" id="produtos" style="padding-bottom: 0;">
+    <div class="section-header">
+      <div class="section-title"><span class="dot"></span> <span id="products-title">Todos os achadinhos</span></div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:12px;color:var(--muted)" id="count-label">250 produtos</span>
+        <select class="sort-select" id="sort-select" onchange="sortProducts()">
+          <option value="default">Ordenar por</option>
+          <option value="price-asc">Menor preço</option>
+          <option value="price-desc">Maior preço</option>
+          <option value="discount">Maior desconto</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Filter chips -->
+    <div class="filter-bar" style="margin-bottom:20px">
+      <span class="filter-label">Loja:</span>
+      <button class="filter-chip active" onclick="filterChip('store','all',this)">Todas</button>
+      <button class="filter-chip" onclick="filterChip('store','shopee',this)">Shopee</button>
+      <button class="filter-chip" onclick="filterChip('store','ml',this)">Mercado Livre</button>
+      <div class="filter-sep"></div>
+      <span class="filter-label">Destaque:</span>
+      <button class="filter-chip" onclick="filterChip('tag','frete',this)">Frete Grátis</button>
+      <button class="filter-chip" onclick="filterChip('tag','queima',this)">Queima 🔥</button>
+      <button class="filter-chip" onclick="filterChip('tag','abaixo50',this)">Até R$50</button>
+    </div>
+
+    <div class="products-grid" id="products-grid">
+      <!-- Rendered by JS -->
+    </div>
+
+    <div class="load-more-wrap" id="load-more-wrap" style="margin-bottom:0; padding-bottom:32px;">
+      <button class="btn-load-more" id="load-more-btn" onclick="loadMore()">Carregar mais achados</button>
+    </div>
+  </section>
+
+  <!-- TOP 5 -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-title"><span class="dot"></span> Top 5 da Semana</div>
+      <span class="see-all">atualizado toda sexta →</span>
+    </div>
+    <div class="top5-list" id="top5-list">
+      <!-- Rendered by JS -->
+    </div>
+  </section>
+
+  <!-- TRUST -->
+  <div class="trust-row">
+    <div class="trust-card">
+      <div class="trust-icon"><img src="Images/diferencial/avaliação.png" alt=""></div>
+      <div class="trust-text">
+        <strong>Só avaliação boa</strong>
+        <span>Produtos com +4.5 de nota</span>
+      </div>
+    </div>
+    <div class="trust-card">
+      <div class="trust-icon"><img src="Images/diferencial/link.png" alt=""></div>
+      <div class="trust-text">
+        <strong>Links diretos</strong>
+        <span>Shopee & Mercado Livre oficial</span>
+      </div>
+    </div>
+    <div class="trust-card">
+      <div class="trust-icon"><img src="Images/diferencial/atualização.png" alt=""></div>
+      <div class="trust-text">
+        <strong>Atualização diária</strong>
+        <span>Novos achados todo dia</span>
+      </div>
+    </div>
+    <div class="trust-card">
+      <div class="trust-icon"><img src="Images/diferencial/melhor_preço.png" alt=""></div>
+      <div class="trust-text">
+        <strong>Melhor preço</strong>
+        <span>Comparamos antes de publicar</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo-name">prime <span>achadinhos</span></div>
+        <p class="footer-desc">Curadoria diária dos melhores produtos da Shopee e Mercado Livre. Garimpamos pra você não precisar.</p>
+        <div class="social-row">
+          <a class="social-btn" href="https://www.instagram.com/prime.achadinhos.br?igsh=MWU1dGNrY2xkOTd0Zw==" title="Instagram" target="_blank"><img src="Images/redes sociais/instagram.png" alt=""></a>
+          <a class="social-btn" href="https://www.tiktok.com/@gadgetlab_br" target="_blank" title="TikTok"><img src="Images/redes sociais/tiktok.png" alt=""></a>
+          <a class="social-btn" href="#" title="WhatsApp" target="_blank"><img src="Images/redes sociais/whatzapp.png" alt=""></a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-heading">Categorias</div>
+        <div class="footer-links">
+          <a href="#">Tech & Gadgets</a>
+          <a href="#">Casa & Decoração</a>
+          <a href="#">Beleza & Cuidados</a>
+          <a href="#">Moda & Acessórios</a>
+          <a href="#">Fitness & Saúde</a>
+          <a href="#">Ver todas →</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-heading">Lojas</div>
+        <div class="footer-links">
+          <a href="#">Shopee</a>
+          <a href="#">Mercado Livre</a>
+          <a href="#">Frete Grátis</a>
+          <a href="#">Queima do Dia</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-heading">Informações</div>
+        <div class="footer-links">
+          <a href="#">Sobre o Prime</a>
+          <a href="#">Como funciona</a>
+          <a href="#">Contato</a>
+          <a href="#">Política de privacidade</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Prime Achadinhos — Todos os direitos reservados</p>
+      <p>Links de afiliado Shopee & Mercado Livre</p>
+    </div>
+  </footer>
+
+  <script>
+        // ──────────────────────────────────────
+        // CONFIGURAÇÃO DA PLANILHA
+        // ──────────────────────────────────────
+        const SHEETS_API_URL = 'https://script.google.com/macros/s/AKfycbyU9TfpVjRLhFxNodWdAEcWQreCj3DfkibkLZRNgu056lZEz23RDFBzHJJ1HYN3h_LpZA/exec?action=get';
+        
+        let PRODUCTS = [];
+        let filteredProducts = [];
+        
+        // ──────────────────────────────────────
+        // STATE
+        // ──────────────────────────────────────
+        let currentCat = 'all';
+        let currentStore = 'all';
+        let currentTag = null;
+        let searchTerm = '';
+        let currentSort = 'default';
+        let visibleCount = 12;
+
+        // Carregar produtos da planilha
+        async function loadProductsFromSheet() {
+            try {
+                const response = await fetch(SHEETS_API_URL);
+                const data = await response.json();
+                
+                if (data.success && data.data && data.data.products) {
+                    PRODUCTS = data.data.products;
+                    filteredProducts = [...PRODUCTS];
+                    console.log(`✅ ${PRODUCTS.length} produtos carregados da planilha`);
+                    
+                    renderGrid();
+                    renderTop5();
+                    
+                    // Atualizar estatísticas do hero
+                    const statElement = document.querySelector('.hero-stat.s-orange .stat-num');
+                    if (statElement) statElement.textContent = PRODUCTS.length + '+';
+                } else {
+                    console.error('Erro ao carregar produtos');
+                    loadFallbackProducts();
+                }
+            } catch (error) {
+                console.error('Erro na requisição:', error);
+                loadFallbackProducts();
+            }
+        }
+
+        // Produtos de fallback (caso a planilha não carregue)
+        function loadFallbackProducts() {
+            PRODUCTS = [
+                { id:1, name:"Fone Bluetooth sem fio", desc:"Ótimo som", price:34.90, oldPrice:189.00, store:"shopee", cat:"tech", tags:["queima"], img:"", emoji:"🎧", link:"#" },
+            ];
+            filteredProducts = [...PRODUCTS];
+            renderGrid();
+            renderTop5();
+        }
+
+        // ──────────────────────────────────────
+        // FILTER LOGIC
+        // ──────────────────────────────────────
+        function getFiltered() {
+            let list = [...PRODUCTS];
+            if (currentCat !== 'all' && currentCat !== 'queima') list = list.filter(p => p.cat === currentCat);
+            if (currentCat === 'queima') list = list.filter(p => p.tags && p.tags.includes('queima'));
+            if (currentStore !== 'all') list = list.filter(p => p.store === currentStore);
+            if (currentTag === 'frete') list = list.filter(p => p.tags && p.tags.includes('frete'));
+            if (currentTag === 'queima') list = list.filter(p => p.tags && p.tags.includes('queima'));
+            if (currentTag === 'abaixo50') list = list.filter(p => p.price <= 50);
+            if (searchTerm) {
+                const t = searchTerm.toLowerCase();
+                list = list.filter(p => (p.name || '').toLowerCase().includes(t) || (p.desc || '').toLowerCase().includes(t) || (p.cat || '').includes(t));
+            }
+            if (currentSort === 'price-asc') list.sort((a,b) => a.price - b.price);
+            if (currentSort === 'price-desc') list.sort((a,b) => b.price - a.price);
+            if (currentSort === 'discount') list.sort((a,b) => {
+                const da = ((a.oldPrice - a.price) / a.oldPrice);
+                const db = ((b.oldPrice - b.price) / b.oldPrice);
+                return db - da;
+            });
+            return list;
+        }
+
+        function discount(p) { 
+            if (!p.oldPrice || p.oldPrice === 0) return 0;
+            return Math.round(((p.oldPrice - p.price) / p.oldPrice) * 100); 
+        }
+
+        function renderCard(p, idx) {
+            const dc = discount(p);
+            const storeBadge = p.store === 'shopee'
+                ? `<span class="store-badge badge-shopee">SHOPEE</span>`
+                : `<span class="store-badge badge-ml">MERCADO LIVRE</span>`;
+            const discBadge = dc >= 20 ? `<span class="discount-badge">-${dc}%</span>` : '';
+            const freeShip = p.tags && p.tags.includes('frete') ? `<div class="free-ship">✓ Frete grátis</div>` : '';
+            const img = p.img
+                ? `<img src="${p.img}" alt="${p.name}" loading="lazy" />`
+                : `<div class="product-img-placeholder">${p.emoji || '📦'}</div>`;
+            return `
+                <article class="product-card" style="animation-delay:${(idx%12)*0.04}s">
+                    ${storeBadge}
+                    ${discBadge}
+                    <div class="product-img-wrap">${img}</div>
+                    <div class="product-info">
+                        <div class="product-cat-tag">${(p.cat || '').toUpperCase()}</div>
+                        <div class="product-name">${p.name || ''}</div>
+                        <div class="product-desc">${p.desc || ''}</div>
+                        <div class="price-row">
+                            ${p.oldPrice ? `<span class="price-old">R$${p.oldPrice.toFixed(2).replace('.',',')}</span>` : ''}
+                            <span class="price-new"><small>R$</small>${(p.price || 0).toFixed(2).replace('.',',')}</span>
+                        </div>
+                        ${freeShip}
+                        <a class="btn-buy" href="${p.link || '#'}" target="_blank" rel="noopener noreferrer"
+                          ${!p.link ? `onclick="event.preventDefault(); alert('Link não cadastrado para: ${p.name}')"` : ''}>
+                            Comprar na ${p.store === 'shopee' ? 'Shopee' : 'Mercado Livre'} →
+                        </a>
+                    </div>
+                </article>`;
+        }
+
+        function renderGrid() {
+            const filtered = getFiltered();
+            const grid = document.getElementById('products-grid');
+            if (!grid) return;
+            document.getElementById('count-label').textContent = `${filtered.length} produto${filtered.length !== 1 ? 's' : ''}`;
+            const slice = filtered.slice(0, visibleCount);
+            if (slice.length === 0) {
+                grid.innerHTML = `<div class="no-results"><div class="nr-icon">🔍</div><p>Nenhum achado encontrado. Tente outra busca!</p></div>`;
+            } else {
+                grid.innerHTML = slice.map((p,i) => renderCard(p,i)).join('');
+            }
+            const lmw = document.getElementById('load-more-wrap');
+            if (lmw) lmw.style.display = filtered.length > visibleCount ? 'block' : 'none';
+        }
+
+        function renderTop5() {
+            const top = [...PRODUCTS]
+                .sort((a,b) => discount(b) - discount(a))
+                .slice(0, 5);
+
+            const icons = [
+                'images/podio/primeiro.png',
+                'images/podio/segundo.png',
+                'images/podio/terceiro.png',
+                'images/podio/quarto.png',
+                'images/podio/quinto.png'
+            ];
+
+            const medals = ['gold','silver','bronze','',''];
+            const top5List = document.getElementById('top5-list');
+            if (!top5List) return;
+
+            top5List.innerHTML = top.map((p,i) => {
+                const iconClass = i < 3 ? 'top3-icon' : 'top5-icon';
+                return `
+                    <div class="top5-item" onclick="window.open('${p.link || '#'}', '_blank')">
+                        <div class="top5-num ${medals[i]}">
+                            <img src="${icons[i]}" alt="posição ${i+1}" class="${iconClass}">
+                        </div>
+                        <div class="top5-name">${p.name || ''}</div>
+                        <div class="top5-price">R$${(p.price || 0).toFixed(2).replace('.',',')}</div>
+                        <div class="top5-arrow">→</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ──────────────────────────────────────
+        // ACTIONS
+        // ──────────────────────────────────────
+        function filterCategory(cat, btn) {
+            currentCat = cat;
+            visibleCount = 12;
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            const titles = { all:'Todos os achadinhos', tech:'Tech & Gadgets', casa:'Casa', cozinha:'Cozinha', beleza:'Beleza', moda:'Moda', fitness:'Fitness', games:'Games', automotivo:'Automotivo', papelaria:'Papelaria', decoracao:'Decoração', utilidades:'Utilidades', infantil:'Infantil', pet:'Pet Shop', celular:'Acess. Celular', eletro:'Eletrodomésticos', ferramentas:'Ferramentas', queima:'Queima do Dia 🔥' };
+            const titleEl = document.getElementById('products-title');
+            if (titleEl) titleEl.textContent = titles[cat] || 'Produtos';
+            renderGrid();
+            const produtosEl = document.getElementById('produtos');
+            if (produtosEl) produtosEl.scrollIntoView({ behavior:'smooth', block:'start' });
+        }
+
+        function filterStore(store, btn) {
+            currentStore = store;
+            visibleCount = 12;
+            document.querySelectorAll('.store-pill').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            renderGrid();
+        }
+
+        function filterChip(type, val, btn) {
+            if (type === 'store') {
+                currentStore = val;
+                document.querySelectorAll('.filter-chip').forEach(b => {
+                    if (['all','shopee','ml'].includes(b.textContent.toLowerCase().replace(' ','').replace('mercadolivre','ml'))) b.classList.remove('active');
+                });
+            } else {
+                currentTag = currentTag === val ? null : val;
+            }
+            btn.classList.toggle('active');
+            visibleCount = 12;
+            renderGrid();
+        }
+
+        function sortProducts() {
+            currentSort = document.getElementById('sort-select').value;
+            renderGrid();
+        }
+
+        function doSearch() {
+            searchTerm = document.getElementById('main-search').value.trim();
+            visibleCount = 12;
+            currentCat = 'all';
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            const allBtn = document.querySelector('[data-cat="all"]');
+            if (allBtn) allBtn.classList.add('active');
+            const titleEl = document.getElementById('products-title');
+            if (titleEl) titleEl.textContent = searchTerm ? `Resultados para "${searchTerm}"` : 'Todos os achadinhos';
+            renderGrid();
+        }
+
+        function loadMore() {
+            visibleCount += 12;
+            renderGrid();
+        }
+
+        // Função para animar contagem de números
+        function animateNumber(element, start, end, duration, suffix = '') {
+            let startTime = null;
+            
+            function animation(currentTime) {
+                if (startTime === null) startTime = currentTime;
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+                const current = Math.floor(easeOutQuart * (end - start) + start);
+                element.textContent = current + suffix;
+                if (progress < 1) {
+                    requestAnimationFrame(animation);
+                }
+            }
+            requestAnimationFrame(animation);
+        }
+
+        function startCounterWhenVisible() {
+            const statNumbers = document.querySelectorAll('.hero-stat .stat-num');
+            statNumbers.forEach(stat => {
+                const originalText = stat.textContent;
+                const numberMatch = originalText.match(/\d+/);
+                if (numberMatch) {
+                    const targetNumber = parseInt(numberMatch[0]);
+                    const suffix = originalText.replace(targetNumber.toString(), '');
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                animateNumber(stat, 0, targetNumber, 2000, suffix);
+                                observer.unobserve(stat);
+                            }
+                        });
+                    }, { threshold: 0.3 });
+                    observer.observe(stat);
+                }
+            });
+        }
+
+        // Event listeners
+        const searchInput = document.getElementById('main-search');
+        if (searchInput) {
+            searchInput.addEventListener('keydown', e => {
+                if (e.key === 'Enter') doSearch();
+            });
+        }
+
+        const sortSelect = document.getElementById('sort-select');
+        if (sortSelect) {
+            sortSelect.addEventListener('change', sortProducts);
+        }
+
+        // ──────────────────────────────────────
+        // INIT
+        // ──────────────────────────────────────
+        loadProductsFromSheet();
+        startCounterWhenVisible();
+        
+        // Atualizar a cada 5 minutos
+        setInterval(loadProductsFromSheet, 300000);
+    </script>
+</body>
+</html>
