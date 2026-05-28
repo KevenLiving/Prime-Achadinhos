@@ -69,41 +69,43 @@
        RESET
     ────────────────────────────────────────── */
 
-    /* ⭐ Fogo posicionado DENTRO da imagem */
+   /* ⭐ Fogo posicionado DENTRO da imagem */
     .product-img-wrap {
         position: relative;  /* IMPORTANTE: ponto de referência */
     }
 
     .product-img-wrap .alta-fire {
         position: absolute;
-        bottom: 5px;    /* ou top: 45% se preferir */
+        bottom: 5px;
         right: 5px;
         z-index: 3;
-        font-size: 20px;
+        font-size: 24px;
         cursor: help;
-        animation: firePulse 2.5s ease-in-out infinite;
+        animation: firePulse 4s ease-in-out infinite;
         text-shadow: 0 0 4px rgba(255, 107, 53, 0.5);
-        transition: transform 0.2s ease;
+        transition: transform 0.3s ease;
         background: transparent;
         pointer-events: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: scale(1);  /* ⬅️ Fixo, sem variação */
     }
 
     @keyframes firePulse {
         0%, 100% {
-            transform: scale(1);
-            text-shadow: 0 0 2px rgba(255, 107, 53, 0.3);  
+            text-shadow: 0 0 2px rgba(255, 107, 53, 0.3);
         }
         50% {
-            transform: scale(1.05);
             text-shadow: 0 0 6px rgba(255, 58, 110, 0.5);
         }
     }
 
     .alta-fire:hover {
-        transform: scale(1.1);
+        transform: scale(1.08);  /* Apenas no hover */
     }
 
-    /* Tooltip - ajustado para aparecer à direita para não atrapalhar */
+    /* Tooltip */
     .alta-fire::before {
         content: attr(data-tooltip);
         position: absolute;
@@ -119,12 +121,11 @@
         white-space: nowrap;
         pointer-events: none;
         opacity: 0;
-        transition: opacity 0.3s ease, transform 0.3s ease;
+        transition: opacity 0.4s ease, transform 0.4s ease;
         z-index: 100;
         font-family: var(--font);
     }
 
-    /* Seta do tooltip - apontando para a esquerda */
     .alta-fire::after {
         content: '';
         position: absolute;
@@ -135,7 +136,7 @@
         border-style: solid;
         border-color: transparent transparent transparent rgba(0, 0, 0, 0.9);
         opacity: 0;
-        transition: opacity 0.3s ease;
+        transition: opacity 0.4s ease;
     }
 
     .alta-fire:hover::before,
@@ -1915,12 +1916,27 @@
           
           // ⭐ NOVO: Bola de fogo para produtos com tag "alta"
           const altaFire = (p.tags && p.tags.includes('alta')) 
-              ? `<div class="alta-fire" data-tooltip="🔥 Produto em alta!">🔥</div>` 
+              ? `<div class="alta-fire" data-tooltip="🔥 Produto em alta!"><img src="Images/efeitos/fogo.png" alt="Fogo" style="width: 20px; height: 20px; display: block;"></div>` 
               : '';
           
           const img = p.img
               ? `<img src="${p.img}" alt="${p.name}" loading="lazy" />`
-              : `<div class="product-img-placeholder">${p.emoji || '📦'}</div>`;
+              : `<div class="product-img-placeholder">
+                  ${(function() {
+                      // Verifica se é produto em alta
+                      if (p.tags && p.tags.includes('alta')) {
+                          return `<img src="Images/efeitos/fogo.png" 
+                                      alt="🔥 Produto em alta" 
+                                      class="placeholder-img" />`;
+                      }
+                      // Verifica se tem emoji que é URL
+                      if (p.emoji && (p.emoji.includes('.png') || p.emoji.includes('.jpg'))) {
+                          return `<img src="${p.emoji}" alt="${p.name}" class="placeholder-img" />`;
+                      }
+                      // Fallback para emoji ou ícone padrão
+                      return p.emoji || '📦';
+                  })()}
+                </div>`;
 
           const couponHtml = buildCouponBlock(p);
 
