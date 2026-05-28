@@ -1,13 +1,41 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Prime Achadinhos — Shopee & Mercado Livre</title>
-  <meta name="description" content="Os melhores achadinhos do Brasil. Curadoria diária de ofertas da Shopee e Mercado Livre com os menores preços." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    
+    <!-- Título da página -->
+    <title>Prime Achadinhos | Cupons e ofertas | Shopee & Mercado Livre</title>
+    
+    <!-- Meta Description para SEO -->
+    <meta name="description" content="Prime Achadinhos: os melhores cupons, códigos de desconto e ofertas exclusivas da Shopee e Mercado Livre. Economize até 70% em tech, casa, moda, beleza e muito mais. Atualizado diariamente!" />
+    
+    <!-- Meta Keywords (opcional, menos importante hoje em dia) -->
+    <meta name="keywords" content="cupons, descontos, ofertas, shopee, mercado livre, achadinhos, promoções, código de desconto, comprar com desconto" />
+    
+    <!-- Autor -->
+    <meta name="author" content="Prime Achadinhos" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="Images/logo_favicon.ico">
+    <link rel="apple-touch-icon" href="Images/logo_favicon.ico">
+    
+    <!-- Open Graph (para compartilhamento no Facebook/WhatsApp) -->
+    <meta property="og:title" content="Prime Achadinhos | Cupons e ofertas" />
+    <meta property="og:description" content="Os melhores cupons e descontos da Shopee e Mercado Livre. Economize até 70%!" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="Images/logo.png" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Prime Achadinhos" />
+    <meta name="twitter:description" content="Cupons e ofertas exclusivas para Shopee e Mercado Livre" />
+    
+    <!-- Fontes e CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     /* ──────────────────────────────────────────
        TOKENS
@@ -35,6 +63,80 @@
     /* ──────────────────────────────────────────
        RESET
     ────────────────────────────────────────── */
+
+    /* ⭐ Fogo posicionado DENTRO da imagem */
+    .product-img-wrap {
+        position: relative;  /* IMPORTANTE: ponto de referência */
+    }
+
+    .product-img-wrap .alta-fire {
+        position: absolute;
+        bottom: 5px;    /* ou top: 45% se preferir */
+        right: 5px;
+        z-index: 3;
+        font-size: 20px;
+        cursor: help;
+        animation: firePulse 2.5s ease-in-out infinite;
+        text-shadow: 0 0 4px rgba(255, 107, 53, 0.5);
+        transition: transform 0.2s ease;
+        background: transparent;
+        pointer-events: auto;
+    }
+
+    @keyframes firePulse {
+        0%, 100% {
+            transform: scale(1);
+            text-shadow: 0 0 2px rgba(255, 107, 53, 0.3);  
+        }
+        50% {
+            transform: scale(1.05);
+            text-shadow: 0 0 6px rgba(255, 58, 110, 0.5);
+        }
+    }
+
+    .alta-fire:hover {
+        transform: scale(1.1);
+    }
+
+    /* Tooltip - ajustado para aparecer à direita para não atrapalhar */
+    .alta-fire::before {
+        content: attr(data-tooltip);
+        position: absolute;
+        top: 50%;
+        right: 120%;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.9);
+        color: #FF6B35;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 6px 12px;
+        border-radius: 8px;
+        white-space: nowrap;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        z-index: 100;
+        font-family: var(--font);
+    }
+
+    /* Seta do tooltip - apontando para a esquerda */
+    .alta-fire::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        right: 115%;
+        transform: translateY(-50%);
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent transparent transparent rgba(0, 0, 0, 0.9);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .alta-fire:hover::before,
+    .alta-fire:hover::after {
+        opacity: 1;
+    }
 
     #fogo {
       width: 14px;
@@ -1151,7 +1253,7 @@
     }
     @media (max-width: 600px) {
       #logo_tipo {
-        width: 23%;
+        width: 26%;
         justify-content: center;
       }
       .nav-inner { gap: 10px; flex-wrap: wrap; height: auto; padding: 10px 16px; justify-content: center; }
@@ -1181,6 +1283,168 @@
       50%       { box-shadow: 0 0 0 8px rgba(255,107,53,0); }
     }
     .urgency-inner { animation: pulse 3s infinite; }
+
+    /* ══════════════════════════════════════════
+      SISTEMA DE CUPONS — Versão Minimalista
+      Ícone interativo com animação de desconto
+    ══════════════════════════════════════════ */
+
+    /* Container do cupom - apenas um ícone minimalista */
+    .coupon-section {
+      margin-top: 8px;
+      display: inline-flex;
+      align-items: center;
+      position: relative;
+      animation: couponFadeIn .3s ease both;
+    }
+
+    @keyframes couponFadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Botão/Ícone do cupom */
+    .coupon-icon-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 184, 0, 0.12);
+      border: 1px solid rgba(255, 184, 0, 0.25);
+      border-radius: 40px;
+      padding: 5px 12px;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--yellow);
+    }
+
+    .coupon-icon-btn:hover {
+      background: var(--yellow);
+      border-color: var(--yellow);
+      color: #0a0a0a;
+      transform: translateY(-1px);
+    }
+
+    .coupon-icon-btn:active {
+      transform: scale(0.96);
+    }
+
+    /* Estado copiado */
+    .coupon-icon-btn.copied {
+      background: var(--green);
+      border-color: var(--green);
+      color: white;
+      animation: copyFlash 0.3s ease;
+    }
+
+    @keyframes copyFlash {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+
+    /* Tooltip flutuante ao copiar */
+    .coupon-toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--green);
+      color: white;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 40px;
+      z-index: 1000;
+      opacity: 0;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      pointer-events: none;
+    }
+
+    .coupon-toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* Animação do preço */
+    @keyframes priceGlow {
+      0% { 
+        text-shadow: 0 0 0px var(--green);
+        transform: scale(1);
+      }
+      50% { 
+        text-shadow: 0 0 8px var(--green);
+        transform: scale(1.05);
+      }
+      100% { 
+        text-shadow: 0 0 0px var(--green);
+        transform: scale(1);
+      }
+    }
+
+    .price-animate {
+      animation: priceGlow 0.4s ease;
+    }
+
+    /* Animação do desconto */
+    @keyframes discountPop {
+      0% { 
+        opacity: 0;
+        transform: translateY(-10px) scale(0.8);
+      }
+      30% {
+        opacity: 1;
+        transform: translateY(5px) scale(1.1);
+      }
+      100% { 
+        opacity: 0;
+        transform: translateY(20px) scale(0.9);
+      }
+    }
+
+    .coupon-discount-float {
+      position: absolute;
+      background: var(--pink);
+      color: white;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 30px;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 100;
+      animation: discountPop 0.6s ease forwards;
+      box-shadow: 0 2px 8px rgba(255,58,110,0.3);
+    }
+
+    /* Indicador para admin */
+    .coupon-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255,184,0,0.1);
+      border: 1px solid rgba(255,184,0,0.25);
+      color: var(--yellow);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 30px;
+    }
+
+    /* Responsivo */
+    @media (max-width: 480px) {
+      .coupon-icon-btn {
+        padding: 4px 10px;
+        font-size: 10px;
+      }
+      .coupon-toast {
+        font-size: 11px;
+        padding: 8px 16px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1374,9 +1638,11 @@
       <button class="filter-chip" onclick="filterChip('store','ml',this)">Mercado Livre</button>
       <div class="filter-sep"></div>
       <span class="filter-label">Destaque:</span>
+      <button class="filter-chip" onclick="explodirConfetes(event); filterChip('tag','copa',this)">Copa do Mundo</button>
       <button class="filter-chip" onclick="filterChip('tag','frete',this)">Frete Grátis</button>
       <button class="filter-chip" onclick="filterChip('tag','queima',this)">Queima 🔥</button>
       <button class="filter-chip" onclick="filterChip('tag','abaixo50',this)">Até R$50</button>
+      <button class="filter-chip" onclick="filterChip('tag','cupom',this)">🎫 Com Cupom</button>
     </div>
 
     <div class="products-grid" id="products-grid">
@@ -1441,20 +1707,21 @@
         <div class="social-row">
           <a class="social-btn" href="https://www.instagram.com/prime.achadinhos.br?igsh=MWU1dGNrY2xkOTd0Zw==" title="Instagram" target="_blank"><img src="Images/redes sociais/instagram.png" alt=""></a>
           <a class="social-btn" href="https://www.tiktok.com/@gadgetlab_br" target="_blank" title="TikTok"><img src="Images/redes sociais/tiktok.png" alt=""></a>
-          <a class="social-btn" href="#" title="WhatsApp" target="_blank"><img src="Images/redes sociais/whatzapp.png" alt=""></a>
+          <!-- <a class="social-btn" href="#" title="WhatsApp" ><img src="Images/redes sociais/whatzapp.png" alt=""></a> -->
         </div>
       </div>
       <div>
         <div class="footer-heading">Categorias</div>
         <div class="footer-links">
-          <a href="#">Tech & Gadgets</a>
-          <a href="#">Casa & Decoração</a>
-          <a href="#">Beleza & Cuidados</a>
-          <a href="#">Moda & Acessórios</a>
-          <a href="#">Fitness & Saúde</a>
-          <a href="#">Ver todas →</a>
+          <a href="#" onclick="filterCategory('tech', document.querySelector('[data-cat=tech]'))">Tech & Gadgets</a>
+          <a href="#" onclick="filterCategory('casa', document.querySelector('[data-cat=casa]'))">Casa & Decoração</a>
+          <a href="#" onclick="filterCategory('beleza', document.querySelector('[data-cat=beleza]'))">Beleza & Cuidados</a>
+          <a href="#" onclick="filterCategory('moda', document.querySelector('[data-cat=moda]'))">Moda & Acessórios</a>
+          <a href="#" onclick="filterCategory('fitness', document.querySelector('[data-cat=fitness]'))">Fitness & Saúde</a>
+          <a href="#" onclick="filterCategory('all', document.querySelector('[data-cat=all]'))">Ver todas →</a>
         </div>
       </div>
+
       <div>
         <div class="footer-heading">Lojas</div>
         <div class="footer-links">
@@ -1484,7 +1751,7 @@
         // ──────────────────────────────────────
         // CONFIGURAÇÃO DA PLANILHA
         // ──────────────────────────────────────
-        const SHEETS_API_URL = 'https://script.google.com/macros/s/AKfycbyU9TfpVjRLhFxNodWdAEcWQreCj3DfkibkLZRNgu056lZEz23RDFBzHJJ1HYN3h_LpZA/exec?action=get';
+        const SHEETS_API_URL = 'https://script.google.com/macros/s/AKfycbxpqu3pjDH-KfLytJruKOWjEzp5Jy98nW-jvsxltdHaEm2aYOd3hcKL8wmkEYAIgBiK/exec?action=get';
         
         let PRODUCTS = [];
         let filteredProducts = [];
@@ -1494,7 +1761,7 @@
         // ──────────────────────────────────────
         let currentCat = 'all';
         let currentStore = 'all';
-        let currentTag = null;
+        let activeTags = new Set();
         let searchTerm = '';
         let currentSort = 'default';
         let visibleCount = 12;
@@ -1540,26 +1807,93 @@
         // FILTER LOGIC
         // ──────────────────────────────────────
         function getFiltered() {
-            let list = [...PRODUCTS];
-            if (currentCat !== 'all' && currentCat !== 'queima') list = list.filter(p => p.cat === currentCat);
-            if (currentCat === 'queima') list = list.filter(p => p.tags && p.tags.includes('queima'));
-            if (currentStore !== 'all') list = list.filter(p => p.store === currentStore);
-            if (currentTag === 'frete') list = list.filter(p => p.tags && p.tags.includes('frete'));
-            if (currentTag === 'queima') list = list.filter(p => p.tags && p.tags.includes('queima'));
-            if (currentTag === 'abaixo50') list = list.filter(p => p.price <= 50);
-            if (searchTerm) {
-                const t = searchTerm.toLowerCase();
-                list = list.filter(p => (p.name || '').toLowerCase().includes(t) || (p.desc || '').toLowerCase().includes(t) || (p.cat || '').includes(t));
-            }
-            if (currentSort === 'price-asc') list.sort((a,b) => a.price - b.price);
-            if (currentSort === 'price-desc') list.sort((a,b) => b.price - a.price);
-            if (currentSort === 'discount') list.sort((a,b) => {
-                const da = ((a.oldPrice - a.price) / a.oldPrice);
-                const db = ((b.oldPrice - b.price) / b.oldPrice);
-                return db - da;
-            });
-            return list;
-        }
+          let list = [...PRODUCTS];
+          
+          // Aplicar filtros existentes
+          if (currentCat !== 'all' && currentCat !== 'queima') 
+              list = list.filter(p => p.cat === currentCat);
+          if (currentCat === 'queima') 
+              list = list.filter(p => p.tags && p.tags.includes('queima'));
+          if (currentStore !== 'all') 
+              list = list.filter(p => p.store === currentStore);
+          
+          // Filtros de destaque
+          if (activeTags.has('frete'))    
+              list = list.filter(p => p.tags && p.tags.includes('frete'));
+          if (activeTags.has('copa'))     
+              list = list.filter(p => p.tags && p.tags.includes('copa'));
+          if (activeTags.has('queima'))   
+              list = list.filter(p => p.tags && p.tags.includes('queima'));
+          if (activeTags.has('abaixo50')) 
+              list = list.filter(p => p.price <= 50);
+          if (activeTags.has('cupom'))    
+              list = list.filter(p => p.couponCode && p.couponActive === 'SIM');
+
+          // Busca textual
+          if (searchTerm) {
+              const t = searchTerm.toLowerCase();
+              list = list.filter(p => 
+                  (p.name || '').toLowerCase().includes(t) || 
+                  (p.desc || '').toLowerCase().includes(t) || 
+                  (p.cat || '').includes(t)
+              );
+          }
+          
+          // ⭐ NOVA REGRA: Ordenar produtos com tag "alta" primeiro
+          // Isso acontece ANTES dos outros tipos de ordenação
+          list.sort((a, b) => {
+              const aHasAlta = a.tags && a.tags.includes('alta');
+              const bHasAlta = b.tags && b.tags.includes('alta');
+              
+              // Se ambos têm ou ambos não têm a tag "alta", mantém ordem original
+              if (aHasAlta === bHasAlta) return 0;
+              
+              // Produto com "alta" vem primeiro
+              return aHasAlta ? -1 : 1;
+          });
+          
+          // Aplicar ordenação escolhida pelo usuário (mantendo "alta" no topo relativo)
+          if (currentSort === 'price-asc') {
+              // Ordenar por preço, mas manter "alta" no topo do seu grupo
+              list.sort((a, b) => {
+                  const aHasAlta = a.tags && a.tags.includes('alta');
+                  const bHasAlta = b.tags && b.tags.includes('alta');
+                  
+                  if (aHasAlta !== bHasAlta) {
+                      return aHasAlta ? -1 : 1;
+                  }
+                  return a.price - b.price;
+              });
+          }
+          
+          if (currentSort === 'price-desc') {
+              list.sort((a, b) => {
+                  const aHasAlta = a.tags && a.tags.includes('alta');
+                  const bHasAlta = b.tags && b.tags.includes('alta');
+                  
+                  if (aHasAlta !== bHasAlta) {
+                      return aHasAlta ? -1 : 1;
+                  }
+                  return b.price - a.price;
+              });
+          }
+          
+          if (currentSort === 'discount') {
+              list.sort((a, b) => {
+                  const aHasAlta = a.tags && a.tags.includes('alta');
+                  const bHasAlta = b.tags && b.tags.includes('alta');
+                  
+                  if (aHasAlta !== bHasAlta) {
+                      return aHasAlta ? -1 : 1;
+                  }
+                  const da = ((a.oldPrice - a.price) / a.oldPrice) || 0;
+                  const db = ((b.oldPrice - b.price) / b.oldPrice) || 0;
+                  return db - da;
+              });
+          }
+          
+          return list;
+      }
 
         function discount(p) { 
             if (!p.oldPrice || p.oldPrice === 0) return 0;
@@ -1567,36 +1901,252 @@
         }
 
         function renderCard(p, idx) {
-            const dc = discount(p);
-            const storeBadge = p.store === 'shopee'
-                ? `<span class="store-badge badge-shopee">SHOPEE</span>`
-                : `<span class="store-badge badge-ml">MERCADO LIVRE</span>`;
-            const discBadge = dc >= 20 ? `<span class="discount-badge">-${dc}%</span>` : '';
-            const freeShip = p.tags && p.tags.includes('frete') ? `<div class="free-ship">✓ Frete grátis</div>` : '';
-            const img = p.img
-                ? `<img src="${p.img}" alt="${p.name}" loading="lazy" />`
-                : `<div class="product-img-placeholder">${p.emoji || '📦'}</div>`;
-            return `
-                <article class="product-card" style="animation-delay:${(idx%12)*0.04}s">
-                    ${storeBadge}
-                    ${discBadge}
-                    <div class="product-img-wrap">${img}</div>
-                    <div class="product-info">
-                        <div class="product-cat-tag">${(p.cat || '').toUpperCase()}</div>
-                        <div class="product-name">${p.name || ''}</div>
-                        <div class="product-desc">${p.desc || ''}</div>
-                        <div class="price-row">
-                            ${p.oldPrice ? `<span class="price-old">R$${p.oldPrice.toFixed(2).replace('.',',')}</span>` : ''}
-                            <span class="price-new"><small>R$</small>${(p.price || 0).toFixed(2).replace('.',',')}</span>
-                        </div>
-                        ${freeShip}
-                        <a class="btn-buy" href="${p.link || '#'}" target="_blank" rel="noopener noreferrer"
-                          ${!p.link ? `onclick="event.preventDefault(); alert('Link não cadastrado para: ${p.name}')"` : ''}>
-                            Comprar na ${p.store === 'shopee' ? 'Shopee' : 'Mercado Livre'} →
-                        </a>
-                    </div>
-                </article>`;
+          const dc = discount(p);
+          const storeBadge = p.store === 'shopee'
+              ? `<span class="store-badge badge-shopee">SHOPEE</span>`
+              : `<span class="store-badge badge-ml">MERCADO LIVRE</span>`;
+          const discBadge = dc >= 20 ? `<span class="discount-badge">-${dc}%</span>` : '';
+          const freeShip = p.tags && p.tags.includes('frete') ? `<div class="free-ship">✓ Frete grátis</div>` : '';
+          
+          // ⭐ NOVO: Bola de fogo para produtos com tag "alta"
+          const altaFire = (p.tags && p.tags.includes('alta')) 
+              ? `<div class="alta-fire" data-tooltip="🔥 Produto em alta!">🔥</div>` 
+              : '';
+          
+          const img = p.img
+              ? `<img src="${p.img}" alt="${p.name}" loading="lazy" />`
+              : `<div class="product-img-placeholder">${p.emoji || '📦'}</div>`;
+
+          const couponHtml = buildCouponBlock(p);
+
+          return `
+              <article class="product-card" style="animation-delay:${(idx%12)*0.04}s">
+                  ${storeBadge}
+                  ${discBadge}
+                  <div class="product-img-wrap">${img} ${altaFire}</div>
+                  <div class="product-info">
+                      <div class="product-cat-tag">${(p.cat || '').toUpperCase()}</div>
+                      <div class="product-name">${p.name || ''}</div>
+                      <div class="product-desc">${p.desc || ''}</div>
+                      <div class="price-row">
+                          ${p.oldPrice ? `<span class="price-old">R$${p.oldPrice.toFixed(2).replace('.',',')}</span>` : ''}
+                          <span class="price-new" data-original-price="${p.price || 0}"><small>R$</small>${(p.price || 0).toFixed(2).replace('.',',')}</span>
+                      </div>
+                      ${freeShip}
+                      ${couponHtml}
+                      <a class="btn-buy" href="${p.link || '#'}" target="_blank" rel="noopener noreferrer"
+                        ${!p.link ? `onclick="event.preventDefault(); alert('Link não cadastrado para: ${p.name}')"` : ''}>
+                          Comprar na ${p.store === 'shopee' ? 'Shopee' : 'Mercado Livre'} →
+                      </a>
+                  </div>
+              </article>`;
+      }
+
+        // ── SISTEMA DE CUPONS MINIMALISTA ─────────────────────────────────
+        // Verifica se o cupom está ativo e dentro da validade
+        function isCouponValid(p) {
+            if (!p.couponCode) return false;
+            if (p.couponActive !== 'SIM') return false;
+            if (!p.couponExpire) return true;
+            return new Date(p.couponExpire) > new Date();
         }
+
+        // Calcula o desconto real do cupom
+        function getCouponDiscount(p) {
+            if (!p.couponPrice) return 0;
+            const original = parseFloat(p.price) || 0;
+            const discounted = parseFloat(p.couponPrice) || 0;
+            if (original <= 0 || discounted >= original) return 0;
+            return Math.round(((original - discounted) / original) * 100);
+        }
+
+        // Gera o HTML do cupom (versão minimalista com ícone)
+        function buildCouponBlock(p) {
+          if (!isCouponValid(p)) return '';
+          
+          const uid = `cpn-${p.id || Math.random().toString(36).slice(2)}`;
+          const code = p.couponCode;
+          const discountPercent = getCouponDiscount(p);
+          
+          // 👇 AQUI: Define o texto com "Copiar cupom" 👇
+          let buttonText = '🎫 COPIAR CUPOM';
+          if (discountPercent > 0) {
+              buttonText = `🎫 -${discountPercent}% COPIAR CUPOM`;  // Ex: 🎫 -25% Copiar cupom
+          }
+          
+          return `
+          <div class="coupon-section" id="${uid}">
+              <button class="coupon-icon-btn" 
+                  data-code="${code}"
+                  data-discount-percent="${discountPercent}"
+                  data-original-text="${buttonText.replace(/'/g, "\\'")}"
+                  onclick="applyCoupon(this, event, '${code}', ${discountPercent})">
+                  ${buttonText}
+              </button>
+          </div>`;
+      }
+
+        // Mostrar toast de notificação
+        function showToast(message) {
+            let toast = document.querySelector('.coupon-toast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.className = 'coupon-toast';
+                document.body.appendChild(toast);
+            }
+            
+            toast.textContent = `✨ ${message} ✨`;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2000);
+        }
+
+        // Mostrar floating badge de desconto
+        function showDiscountFloat(btn, discountPercent) {
+            if (discountPercent <= 0) return;
+            
+            const float = document.createElement('div');
+            float.className = 'coupon-discount-float';
+            float.textContent = `🔥 -${discountPercent}% OFF`;
+            
+            const rect = btn.getBoundingClientRect();
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
+            
+            float.style.position = 'absolute';
+            float.style.top = `${rect.top + scrollTop - 30}px`;
+            float.style.left = `${rect.left + scrollLeft + rect.width / 2 - 40}px`;
+            
+            document.body.appendChild(float);
+            
+            setTimeout(() => {
+                float.remove();
+            }, 600);
+        }
+
+        // Animar o preço do produto com o desconto
+        function animatePriceWithDiscount(productCard, discountPercent) {
+            const priceNewEl = productCard.querySelector('.price-new');
+            const priceRow = productCard.querySelector('.price-row');
+            
+            if (!priceNewEl) return;
+            
+            // Pegar preço original do atributo data
+            const originalPrice = parseFloat(priceNewEl.dataset.originalPrice);
+            if (isNaN(originalPrice)) return;
+            
+            // Calcular preço com desconto
+            const discountedPrice = originalPrice * (1 - discountPercent / 100);
+            
+            // Verificar se desconto já foi aplicado neste card
+            if (productCard.dataset.discountApplied === 'true') {
+                priceNewEl.classList.add('price-animate');
+                setTimeout(() => priceNewEl.classList.remove('price-animate'), 400);
+                return;
+            }
+            
+            const formatPrice = (price) => {
+                return `R$${price.toFixed(2).replace('.', ',')}`;
+            };
+            
+            // Criar elemento de preço antigo se não existir
+            let priceOldEl = productCard.querySelector('.price-old');
+            if (!priceOldEl && discountPercent > 0) {
+                const newOldPrice = document.createElement('span');
+                newOldPrice.className = 'price-old';
+                newOldPrice.textContent = formatPrice(originalPrice);
+                priceRow.insertBefore(newOldPrice, priceNewEl);
+                priceOldEl = newOldPrice;
+            } else if (priceOldEl && discountPercent > 0) {
+                priceOldEl.textContent = formatPrice(originalPrice);
+                priceOldEl.style.opacity = '1';
+            }
+            
+            // Atualizar preço novo
+            priceNewEl.innerHTML = `<small>R$</small>${discountedPrice.toFixed(2).replace('.', ',')}`;
+            priceNewEl.classList.add('price-animate');
+            
+            // Adicionar badge de desconto se não existir
+            if (discountPercent > 0 && !productCard.querySelector('.coupon-discount-badge')) {
+                const discountBadge = document.createElement('div');
+                discountBadge.className = 'discount-badge coupon-discount-badge';
+                discountBadge.textContent = `💎 -${discountPercent}%`;
+                discountBadge.style.background = 'var(--green)';
+                
+                const existingBadge = productCard.querySelector('.discount-badge:not(.coupon-discount-badge)');
+                if (existingBadge && existingBadge.textContent.includes('%')) {
+                    existingBadge.remove();
+                }
+                productCard.querySelector('.product-img-wrap')?.appendChild(discountBadge);
+            }
+            
+            // Marcar que desconto foi aplicado
+            productCard.dataset.discountApplied = 'true';
+            
+            setTimeout(() => {
+                priceNewEl.classList.remove('price-animate');
+            }, 400);
+        }
+
+        // Função principal para aplicar cupom
+        function applyCoupon(btn, event, code, discountPercent) {
+          track('cupom_copiado', { produto: code, valor: discountPercent });
+          event.preventDefault();
+          event.stopPropagation();
+          
+          if (btn.classList.contains('copied')) return;
+          
+          // Salvar o texto original (se não estiver salvo)
+          if (!btn.dataset.originalText) {
+              btn.dataset.originalText = btn.textContent;
+          }
+          
+          const doCopy = () => {
+              if (navigator.clipboard && window.isSecureContext) {
+                  return navigator.clipboard.writeText(code);
+              }
+              const ta = document.createElement('textarea');
+              ta.value = code;
+              ta.style.cssText = 'position:fixed;left:-9999px;top:-9999px';
+              document.body.appendChild(ta);
+              ta.focus(); ta.select();
+              document.execCommand('copy');
+              document.body.removeChild(ta);
+              return Promise.resolve();
+          };
+          
+          doCopy().then(() => {
+              btn.classList.add('copied');
+              
+              // 👇 MUDA PARA "✓ Copiado!" TEMPORARIAMENTE 👇
+              btn.textContent = '✓ Copiado!';
+              
+              showToast(`Cupom ${code} copiado! ${discountPercent > 0 ? `${discountPercent}% de desconto` : ''}`);
+              
+              const productCard = btn.closest('.product-card');
+              if (productCard && discountPercent > 0) {
+                  animatePriceWithDiscount(productCard, discountPercent);
+              }
+              
+              if (discountPercent > 0) {
+                  showDiscountFloat(btn, discountPercent);
+              }
+              
+              setTimeout(() => {
+                  btn.classList.remove('copied');
+                  // 👇 VOLTA PARA O TEXTO ORIGINAL (porcentagem + Copiar cupom) 👇
+                  btn.textContent = btn.dataset.originalText;
+              }, 2000);
+              
+          }).catch(() => {
+              showToast(`Cupom: ${code}`);
+          });
+      }
+
+        // Função vazia para compatibilidade (não precisamos mais de timer)
+        function tickCoupons() {}
 
         function renderGrid() {
             const filtered = getFiltered();
@@ -1649,6 +2199,7 @@
         // ACTIONS
         // ──────────────────────────────────────
         function filterCategory(cat, btn) {
+            track('filtro_categoria', { categoria: cat });
             currentCat = cat;
             visibleCount = 12;
             document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
@@ -1670,18 +2221,27 @@
         }
 
         function filterChip(type, val, btn) {
-            if (type === 'store') {
-                currentStore = val;
-                document.querySelectorAll('.filter-chip').forEach(b => {
-                    if (['all','shopee','ml'].includes(b.textContent.toLowerCase().replace(' ','').replace('mercadolivre','ml'))) b.classList.remove('active');
-                });
-            } else {
-                currentTag = currentTag === val ? null : val;
-            }
-            btn.classList.toggle('active');
-            visibleCount = 12;
-            renderGrid();
-        }
+          track('filtro_chip', { categoria: type, extra: val });
+          if (type === 'store') {
+              currentStore = val;
+              document.querySelectorAll('.filter-chip').forEach(b => {
+                  if (['all','shopee','ml'].includes(b.textContent.toLowerCase().replace(' ','').replace('mercadolivre','ml'))) 
+                      b.classList.remove('active');
+              });
+              btn.classList.add('active'); // ✅ só aqui
+          } else {
+              if (activeTags.has(val)) {
+                  activeTags.delete(val);
+                  btn.classList.remove('active');
+              } else {
+                  activeTags.add(val);
+                  btn.classList.add('active');
+              }
+              // ✅ sem toggle aqui
+          }
+          visibleCount = 12;
+          renderGrid();
+      }
 
         function sortProducts() {
             currentSort = document.getElementById('sort-select').value;
@@ -1690,6 +2250,7 @@
 
         function doSearch() {
             searchTerm = document.getElementById('main-search').value.trim();
+            track('busca', { extra: searchTerm });
             visibleCount = 12;
             currentCat = 'all';
             document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
@@ -1744,6 +2305,34 @@
             });
         }
 
+        function explodirConfetes(event) {
+          const rect = event.target.getBoundingClientRect();
+
+          // Posição do botão na tela
+          const x = (rect.left + rect.width / 2) / window.innerWidth;
+          const y = (rect.top + rect.height / 2) / window.innerHeight;
+
+          // Primeira explosão
+          confetti({
+              particleCount: 120,
+              spread: 90,
+              origin: { x, y },
+              colors: ['#009c3b', '#ffdf00', '#00b140', '#ffd700'],
+              scalar: 1.2
+          });
+
+          // Segunda explosão
+          setTimeout(() => {
+              confetti({
+                  particleCount: 80,
+                  spread: 120,
+                  origin: { x, y },
+                  colors: ['#009c3b', '#ffdf00'],
+                  scalar: 1
+              });
+          }, 150);
+      }
+
         // Event listeners
         const searchInput = document.getElementById('main-search');
         if (searchInput) {
@@ -1756,6 +2345,33 @@
         if (sortSelect) {
             sortSelect.addEventListener('change', sortProducts);
         }
+
+        const TRACKING_URL = 'https://script.google.com/macros/s/AKfycbwk7XA5o91iJRI3LKw0jcaSBAgaiEaBl0IquT6NqHytmdA5m33iFOyv4xay6BFGC8EHrg/exec';
+
+        function track(evento, dados = {}) {
+          const params = new URLSearchParams({ evento, ...dados });
+          const img = new Image();
+          img.src = TRACKING_URL + '?' + params.toString();
+          // usa Image() em vez de fetch — nunca bloqueia, nunca dá erro de CORS
+        }
+
+        document.addEventListener('click', e => {
+          const btn = e.target.closest('.btn-buy');
+          if (btn) {
+            const card = btn.closest('article');
+            track('clique_comprar', {
+              produto: card?.querySelector('.product-name')?.textContent?.trim(),
+              loja:    card?.querySelector('.store-badge')?.textContent?.trim(),
+            });
+          }
+        });
+
+        function getUTMSource() {
+          const params = new URLSearchParams(window.location.search);
+          return params.get('utm_source') || 'direto';
+        }
+
+        track('visita', { origem: getUTMSource() });
 
         // ──────────────────────────────────────
         // INIT
