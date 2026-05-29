@@ -1,11 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <script>
-    if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
-      location.href = 'https://' + location.hostname + location.pathname + location.search;
-    }
-  </script>
+  
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
   <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
@@ -1754,6 +1750,22 @@
   </footer>
 
   <script>
+
+        // ──────────────────────────────────────
+        // TRACKING — deve ficar no topo
+        // ──────────────────────────────────────
+        const TRACKING_URL = 'https://script.google.com/macros/s/AKfycbybHY6YroygZ0LaFiCnggTp2FFuBU3LHOUZ4aX56gEz0fhFK1OHMpLG-3ZhfWxo29cN1g/exec';
+
+        function track(evento, dados = {}) {
+          const params = new URLSearchParams({ evento, ...dados });
+          fetch(TRACKING_URL + '?' + params.toString(), { mode: 'no-cors' }).catch(() => {});
+        }
+
+        function getUTMSource() {
+          const params = new URLSearchParams(window.location.search);
+          return params.get('utm_source') || 'direto';
+        }
+
         // ──────────────────────────────────────
         // CONFIGURAÇÃO DA PLANILHA
         // ──────────────────────────────────────
@@ -2367,14 +2379,6 @@
             sortSelect.addEventListener('change', sortProducts);
         }
 
-        const TRACKING_URL = 'https://script.google.com/macros/s/AKfycbwk7XA5o91iJRI3LKw0jcaSBAgaiEaBl0IquT6NqHytmdA5m33iFOyv4xay6BFGC8EHrg/exec';
-
-        function track(evento, dados = {}) {
-          const params = new URLSearchParams({ evento, ...dados });
-          const img = new Image();
-          img.src = TRACKING_URL + '?' + params.toString();
-          // usa Image() em vez de fetch — nunca bloqueia, nunca dá erro de CORS
-        }
 
         document.addEventListener('click', e => {
           const btn = e.target.closest('.btn-buy');
@@ -2387,10 +2391,6 @@
           }
         });
 
-        function getUTMSource() {
-          const params = new URLSearchParams(window.location.search);
-          return params.get('utm_source') || 'direto';
-        }
 
         track('visita', { origem: getUTMSource() });
 
